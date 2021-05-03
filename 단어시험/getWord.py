@@ -7,10 +7,10 @@ from openpyxl import Workbook
 def getWord():
     context = ssl._create_unverified_context()
 
-    #url ¼±ÅÃºÎºĞ
-    print('''¿øÇÏ´Â ´Ü¾îÀåÀ» ¼±ÅÃÇÏ¼¼¿ä \n 1. Áßµî\n 2.°íµî\n 3.ÅäÀÍ''')
-    selectLevel = int(input("¹øÈ£ ÀÔ·Â : "))
-    print("´Ü¾îÀå ¸¸µå´Â Áß")
+    #url ì„ íƒë¶€ë¶„
+    print('''ì›í•˜ëŠ” ë‹¨ì–´ì¥ì„ ì„ íƒí•˜ì„¸ìš” \n 1. ì¤‘ë“±\n 2.ê³ ë“±\n 3.í† ìµ''')
+    selectLevel = int(input("ë²ˆí˜¸ ì…ë ¥ : "))
+    print("ë‹¨ì–´ì¥ ë§Œë“œëŠ” ì¤‘")
 
     if selectLevel == 1:
         url ='https://learn.dict.naver.com/m/endic/wordbook/mhs/100001/200001/words.nhn?filterType=0&orderType=2&pageNo='
