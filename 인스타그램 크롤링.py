@@ -4,34 +4,86 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import re
-import json
+import numpy as np
 import pandas as pd
 
-insta_id = "01065778166", insta_pw = "fpdltm20010221!"
-login_option = "instagram" # instagram
-driver_path = "~/chromedriver"
-instagram_id_name = "one_ho_won"
-instagram_login_btn = ""
+keyword = "검색 단어"
+count = "검색 글의 개수"
 
-print(f"login start - option {login_option}")
+insta_id = "flash0221@naver.com" 
+insta_pw = "fpdltm20010221!"
+time.sleep(3)
+url = "https://www.instagram.com/explore/tags/{}/".format(keyword)
 
-login_url = "https://www.instagram.com/accounts/login/"
-driver.get(login_url)
-time.sleep(10)
+df = pd.DataFrame("", index=np.arange(1,count+1), columns=["account","date", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10" , "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18", "t19", "t20"])
+insta_account = []
+insta_tags = []
+insta_tag_dates = []
 
-if login_option == "instagram":
+loginURL = "https://www.instagram.com/accounts/login"
+
+driver = wd.Chrome("chromedriver.exe")
+driver.get(loginURL)
+time.sleep(2)
+
+driver.find_elements_by_name('username').send_keys(insta_id)
+driver.find_element_by_name('password').send_keys(insta_pw)
+time.sleep(2)
+driver.find_element_by_css_selector('button.sqdOP.L3NKy.y3zKF').click()
+time.sleep(3)
+
+driver.find_element_by_css_selector('button.sqdOP.yWX7d.y3zKF').click()
+time.sleep(3)
+driver.find_element_by_css_selector('button.aOOlW.HoLwm').click()
+time.sleep(3)
+
+driver.get(url)
+time.sleep(15)
+
+driver.find_element_by_css_selector('div.v1Nh3.kIKUG._bz0w').click()
+time.sleep(3)
+
+for i in range(count):
     try:
-        instagram_id_form = driver.find_element_by_name(instagram_id_name)
-        instagram_id_form.send_keys(user_id)
-        time.sleep(5)
+        account_data = driver.find_element_by_css_selector('a.sqdOP.yWX7d._8A5w5.ZIAjV')
+        account_text = account_data.text
 
-        instagram_pw_form = driver.find_element_by_name(instagram_pw_name)
-        instagram_pw_form.send_keys(user_passwd)
-        time.sleep(7)
+        date = driver.find_element_by_css_selector("time.FH9sR.Nzb55").text
 
-        login_ok_button = driver.find_element_by_css_selector(instagram_login_btn)
-        login_ok_button.click()
-        is_login_success = True
+        if date.find('시간') != -1 or date.find('일') != -1 or date.find('분') != -1:
+            date_text = '0주'
+        else:
+            date_text = date
+
+        data = driver.find_elements_by_css_selector('.C7I1f.X7jCj')
+        tag_raw = data.text
+        tag = re.findall('#[A-Za-z0-9가-힣]+', tag_raw)
+        tag = ''.join(tag).replace("#"," ")
+        tag_data = tag.split()
     except:
-        print("instagram login failed")
-        is_login_success = False
+        tag_data = "error"
+        date_text = "error"
+    try:
+        WebDriverWait(driver, 50).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a._65Bje.coreSpriteRightPaginationArrow')))
+        driver.find_elements_by_css_selector('a._65Bje.coreSpriteRightPaginationArrow').click()
+    except:
+        print("크롤링 비정상 종료")
+        driver.quit()
+
+    time.sleep(5)
+    print('{}, {}번 째 게시물 탐색 완료'.format(time.strftime('%c', time.localtime(time,time())), i+1))
+    print(account_text)
+    print(date_text)
+
+    df.iloc[i, 0] = account_text
+    df.iloc[i, 1] = date_text
+
+    for j in range(17):
+        try:
+            df.iloc[i, j+2] = tag_data[j]
+        except:
+            break
+df.to_excel("/Users/seong-wonho/Documents/크롤링 데이터\\" + keyword+"_results.xlsx")
+
+print('크롤링 종료')
+driver.quit()
