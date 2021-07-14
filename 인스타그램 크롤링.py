@@ -10,12 +10,12 @@ import pandas as pd
 keyword = "검색 단어"
 count = "검색 글의 개수"
 
-insta_id = "flash0221@naver.com" 
-insta_pw = "fpdltm20010221!"
+insta_id = "id" 
+insta_pw = "pw"
 time.sleep(3)
 url = "https://www.instagram.com/explore/tags/{}/".format(keyword)
 
-df = pd.DataFrame("", index=np.arange(1,count+1), columns=["account","date", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10" , "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18", "t19", "t20"])
+df = pd.DataFrame("", index=np.arange(1, count+1), columns=["account", "date", "t1","t2","t3","t4","t5","t6","t7","t8","t9","t10","t11","t12","t13","t14","t15","t16","t17","t18","t19","t20"])
 insta_account = []
 insta_tags = []
 insta_tag_dates = []
