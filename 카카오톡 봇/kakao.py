@@ -67,7 +67,7 @@ def PostKeyEx(hwnd, key, shift, specialkey):
             lparam = lparam | 0x1000000
 
         if len(shift) > 0:
-            pKeyBuffers = PBYTE256()
+            pKeyBuffers = PBYTE256() 
             pKeyBuffers_old = PBYTE256()
 
             SendMessage(hwnd, w.WM_ACTIVATE, w.WA_ACTIVE, 0)
