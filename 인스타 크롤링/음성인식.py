@@ -18,8 +18,8 @@ def typing(value): # 키보드 입력을 하는 함수
     hotkey('ctrl', 'v')
     
 while True:
-    if keyboard.is_pressed('ctrl+alt'): # ctrl+alt를 눌렀을 때에 실행 (바꾸어도 상관 없습니다.)
+    if keyboard.is_pressed('ctrl+alt'): # ctrl+alt를 눌렀을 때에 실행
         voice = read_voice() # 음성 인식
         time.sleep(0.1) 
         typing(voice) # 타이핑
-        press('enter') # 줄바꿈 하기 (생략해도 됩니다.)
+        press('enter') # 줄바꿈 하기
