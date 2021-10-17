@@ -1,4 +1,4 @@
-from binarytree import *
+from binarytree import BinaryTree, Node
 if __name__ == '__main__':
     t = BinaryTree()
     n1 = Node(100)
