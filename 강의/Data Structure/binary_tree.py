@@ -1,10 +1,10 @@
-class BinaryTree:
-    class Node:
-        def __init__ (self, item, left = None, right = None):
-            self.item = item
-            self.left = left
-            self.right = right
-        
+class Node:
+    def __init__ (self, item, left = None, right = None):
+        self.item = item
+        self.left = left
+        self.right = right
+
+class BinaryTree:   
     def __init__(self): # 트리 생성자
         self.root = None
 
@@ -22,6 +22,7 @@ class BinaryTree:
             print(str(n.item),' ', end= '')
             if n.right:
                 self.inorder(n.right)
+                
     def postorder(self,n):
         if n != None:
             if n.left:
